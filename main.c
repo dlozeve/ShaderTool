@@ -9,9 +9,13 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-#define FRAGMENT_SHADER_FILE "main.frag"
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    log_error("Usage: %s <fragment shader>", argv[0]);
+    return EXIT_FAILURE;
+  }
+  const char *fragment_shader_file = argv[1];
 
-int main() {
   GLFWwindow *window = initialize_window(WINDOW_WIDTH, WINDOW_HEIGHT);
   if (window == NULL) {
     glfwTerminate();
@@ -27,12 +31,12 @@ int main() {
     glfwTerminate();
     return EXIT_FAILURE;
   }
-  compile_shaders(&shader_program, FRAGMENT_SHADER_FILE);
+  compile_shaders(&shader_program, fragment_shader_file);
 
   /* Drawing loop */
   size_t frame = 0;
   while (!glfwWindowShouldClose(window)) {
-    process_input(window, &shader_program, FRAGMENT_SHADER_FILE);
+    process_input(window, &shader_program, fragment_shader_file);
 
     /* Background */
     glClearColor(0, 0, 0, 1.0f);
