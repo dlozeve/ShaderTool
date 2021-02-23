@@ -1,0 +1,3 @@
+* ShaderTool
+
+Live tool for developing OpenGL shaders interactively.
