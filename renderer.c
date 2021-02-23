@@ -12,7 +12,7 @@
  *
  * @param width The width of the window to create.
  * @param height The height of the window to create.
- * @return A pointer to the newly created GLFW window.
+ * @return A pointer to the newly created GLFW window, or `NULL` on error.
  */
 GLFWwindow *initialize_window(int width, int height) {
   /* Initialize GLFW */

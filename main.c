@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 #include "log.h"
-#include "shaders.h"
 #include "renderer.h"
+#include "shaders.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -13,15 +13,21 @@
 
 int main() {
   GLFWwindow *window = initialize_window(WINDOW_WIDTH, WINDOW_HEIGHT);
+  if (window == NULL) {
+    glfwTerminate();
+    return EXIT_FAILURE;
+  }
 
   unsigned int VAO = initialize_vertices();
 
   unsigned int shader_program = glCreateProgram();
-  int result = compile_shaders(&shader_program, FRAGMENT_SHADER_FILE);
-  if (!shader_program || result) {
-    log_error("Could not compile shaders");
+  if (!shader_program) {
+    log_error("Could not create shader program");
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return EXIT_FAILURE;
   }
+  compile_shaders(&shader_program, FRAGMENT_SHADER_FILE);
 
   /* Drawing loop */
   size_t frame = 0;
@@ -65,7 +71,7 @@ int main() {
     frame++;
   }
 
+  glfwDestroyWindow(window);
   glfwTerminate();
   return EXIT_SUCCESS;
 }
-
