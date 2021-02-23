@@ -14,7 +14,7 @@ glew_dep = dependency('glew')
 
 executable(
   'shadertool',
-  sources: ['main.c', 'renderer.c', 'shaders.c', 'log.c'],
+  sources: ['src/main.c', 'src/renderer.c', 'src/shaders.c', 'src/log.c'],
   dependencies: [glfw_dep, glew_dep],
   c_args: '-DLOG_USE_COLOR',
 )
