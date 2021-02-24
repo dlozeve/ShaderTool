@@ -1,5 +1,8 @@
+#include <FreeImage.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "log.h"
 #include "renderer.h"
@@ -104,6 +107,41 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
 }
 
 /**
+ * @brief Captures a screenshot of the current window.
+ *
+ * Takes the dimensions of the viewport to save a pixel array of the
+ * same dimensions. Uses FreeImage to create an image from the raw
+ * pixels and save it to disk.
+ */
+void capture_screenshot() {
+  time_t now = time(NULL);
+  struct tm *timenow = gmtime(&now);
+  char image_filename[255] = {0};
+  strftime(image_filename, sizeof(image_filename),
+           "shadertool_%Y%m%d_%H%M%S.png", timenow);
+
+  int viewport[4] = {0};
+  glGetIntegerv(GL_VIEWPORT, viewport);
+
+  GLubyte *pixels = calloc(3 * viewport[2] * viewport[3], 1);
+  glReadPixels(0, 0, viewport[2], viewport[3], GL_BGR, GL_UNSIGNED_BYTE,
+               pixels);
+
+  FIBITMAP *image = FreeImage_ConvertFromRawBits(
+      pixels, viewport[2], viewport[3], 3 * viewport[2], 24, FI_RGBA_RED_MASK,
+      FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
+
+  if (FreeImage_Save(FIF_PNG, image, image_filename, 0)) {
+    log_debug("Image saved to %s", image_filename);
+  } else {
+    log_error("Failed to saved image to %s", image_filename);
+  }
+
+  FreeImage_Unload(image);
+  free(pixels);
+}
+
+/**
  * @brief Ensure the window is closed when the user presses the escape
  * key.
  *
@@ -118,5 +156,7 @@ void process_input(GLFWwindow *window, unsigned int *shader_program,
     glfwSetWindowShouldClose(window, true);
   } else if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
     compile_shaders(shader_program, fragment_shader_file);
+  } else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    capture_screenshot();
   }
 }

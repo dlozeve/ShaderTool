@@ -9,12 +9,15 @@ project(
   ]
 )
 
+cc = meson.get_compiler('c')
+
 glfw_dep = dependency('glfw3')
 glew_dep = dependency('glew')
+freeimage_dep = cc.find_library('freeimage')
 
 executable(
   'shadertool',
   sources: ['src/main.c', 'src/renderer.c', 'src/shaders.c', 'src/log.c'],
-  dependencies: [glfw_dep, glew_dep],
+  dependencies: [glfw_dep, glew_dep, freeimage_dep],
   c_args: '-DLOG_USE_COLOR',
 )
