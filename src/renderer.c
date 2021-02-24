@@ -156,13 +156,18 @@ void capture_screenshot() {
  * @param shader_program Pointer to the shader program to update if needed.
  * @param fragment_shader_file The shader file to reload if needed.
  */
-void process_input(GLFWwindow *window, unsigned int *shader_program,
-                   const char *const fragment_shader_file) {
+void process_input(GLFWwindow *window, unsigned int *screen_shader,
+                   const char *const screen_shader_file,
+                   unsigned int *buffer_shader,
+                   const char *const buffer_shader_file) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     log_debug("Quitting");
     glfwSetWindowShouldClose(window, true);
   } else if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-    compile_shaders(shader_program, fragment_shader_file);
+    compile_shaders(screen_shader, screen_shader_file);
+    if (buffer_shader_file) {
+      compile_shaders(buffer_shader, buffer_shader_file);
+    }
   } else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
     capture_screenshot();
   }
