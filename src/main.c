@@ -38,9 +38,12 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   compile_shaders(&screen_shader, screen_shader_file);
+  glUseProgram(screen_shader);
+  glUniform1i(glGetUniformLocation(screen_shader, "u_texture"), 0);
 
   unsigned int buffer_shader = 0;
   unsigned int framebuffer = 0;
+  unsigned int texture_color_buffer = 0;
   if (buffer_shader_file) {
     buffer_shader = glCreateProgram();
     if (!buffer_shader) {
@@ -50,13 +53,14 @@ int main(int argc, char *argv[]) {
       return EXIT_FAILURE;
     }
     compile_shaders(&buffer_shader, buffer_shader_file);
+    glUseProgram(buffer_shader);
+    glUniform1i(glGetUniformLocation(buffer_shader, "u_texture"), 0);
 
     /* Framebuffer */
     framebuffer = 0;
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     /* color attachment texture */
-    unsigned int texture_color_buffer = 0;
     glGenTextures(1, &texture_color_buffer);
     glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0,
@@ -68,6 +72,9 @@ int main(int argc, char *argv[]) {
     /* check that the framebuffer is complete */
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
       log_error("Framebuffer is not complete");
+      glfwDestroyWindow(window);
+      glfwTerminate();
+      return EXIT_FAILURE;
     } else {
       log_debug("Framebuffer initialized and complete");
     }
@@ -100,8 +107,6 @@ int main(int argc, char *argv[]) {
       glClearColor(0, 0, 0, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT);
 
-      glUseProgram(buffer_shader);
-
       /* Setup uniforms */
       glUniform1ui(glGetUniformLocation(buffer_shader, "u_frame"), frame);
       glUniform1f(glGetUniformLocation(buffer_shader, "u_time"), time);
@@ -109,11 +114,11 @@ int main(int argc, char *argv[]) {
                   viewport[2], viewport[3]);
       glUniform2f(glGetUniformLocation(buffer_shader, "u_mouse"), mouse_x,
                   mouse_y);
-      glUniform1d(glGetUniformLocation(buffer_shader, "u_texture"), 0);
 
       /* Draw the vertices */
-      // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); /* For wireframe mode */
       glBindVertexArray(VAO);
+      glUseProgram(buffer_shader);
+      glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       glBindVertexArray(0);
 
@@ -124,8 +129,6 @@ int main(int argc, char *argv[]) {
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(screen_shader);
-
     /* Setup uniforms */
     glUniform1ui(glGetUniformLocation(screen_shader, "u_frame"), frame);
     glUniform1f(glGetUniformLocation(screen_shader, "u_time"), time);
@@ -133,11 +136,11 @@ int main(int argc, char *argv[]) {
                 viewport[2], viewport[3]);
     glUniform2f(glGetUniformLocation(screen_shader, "u_mouse"), mouse_x,
                 mouse_y);
-    glUniform1d(glGetUniformLocation(screen_shader, "u_texture"), 0);
 
     /* Draw the vertices */
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); /* For wireframe mode */
     glBindVertexArray(VAO);
+    glUseProgram(screen_shader);
+    glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
