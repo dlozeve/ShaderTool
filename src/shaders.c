@@ -63,13 +63,17 @@ char *read_file(const char *const filename) {
  */
 int compile_shaders(unsigned int *shader_program,
                     const char *const fragment_shader_file) {
+  log_debug("Compiling %s", fragment_shader_file);
   /* Compile vertex shader */
   const char *const vertex_shader_source =
       "#version 330 core\n"
       "layout (location = 0) in vec3 aPos;\n"
+      "layout (location = 1) in vec2 aTexCoord;\n"
+      "out vec2 TexCoord;\n"
       "void main()\n"
       "{\n"
       "  gl_Position = vec4(aPos, 1.0);\n"
+      "  TexCoord = aTexCoord;\n"
       "}\n";
 
   unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);

@@ -62,13 +62,14 @@ GLFWwindow *initialize_window(int width, int height) {
 unsigned int initialize_vertices() {
   /* Define vertices */
   float vertices[] = {
-      -1.0, -1.0, 0.0, // bottom left
-      -1.0, 1.0,  0.0, // top left
-      1.0,  -1.0, 0.0, // top right
-      1.0,  1.0,  0.0  // bottom right
+      // positions     // texture coords
+      1.0,  1.0,  0.0, 1.0, 1.0, // top right
+      1.0,  -1.0, 0.0, 1.0, 0.0, // bottom right
+      -1.0, -1.0, 0.0, 0.0, 0.0, // bottom left
+      -1.0, 1.0,  0.0, 0.0, 1.0, // top left
   };
   unsigned int indices[] = {
-      0, 1, 2, // first triangle
+      0, 1, 3, // first triangle
       1, 2, 3  // second triangle
   };
 
@@ -86,8 +87,14 @@ unsigned int initialize_vertices() {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
                GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  /* position attribute */
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
+  /* texture coord attribute */
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+                        (void *)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+
   log_debug("Vertex data initialized successfully");
 
   return VAO;
