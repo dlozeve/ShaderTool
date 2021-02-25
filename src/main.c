@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
     glUniform1i(glGetUniformLocation(buffer_shader, "u_texture"), 0);
 
     /* Framebuffer */
-    framebuffer = 0;
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     /* color attachment texture */
@@ -108,6 +107,7 @@ int main(int argc, char *argv[]) {
       glClear(GL_COLOR_BUFFER_BIT);
 
       /* Setup uniforms */
+      glUseProgram(buffer_shader);
       glUniform1ui(glGetUniformLocation(buffer_shader, "u_frame"), frame);
       glUniform1f(glGetUniformLocation(buffer_shader, "u_time"), time);
       glUniform2f(glGetUniformLocation(buffer_shader, "u_resolution"),
@@ -117,19 +117,19 @@ int main(int argc, char *argv[]) {
 
       /* Draw the vertices */
       glBindVertexArray(VAO);
-      glUseProgram(buffer_shader);
       glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       glBindVertexArray(0);
-
-      /* bind back to default framebuffer */
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
+
+    /* bind back to default framebuffer */
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* Setup uniforms */
+    glUseProgram(screen_shader);
     glUniform1ui(glGetUniformLocation(screen_shader, "u_frame"), frame);
     glUniform1f(glGetUniformLocation(screen_shader, "u_time"), time);
     glUniform2f(glGetUniformLocation(screen_shader, "u_resolution"),
@@ -139,7 +139,6 @@ int main(int argc, char *argv[]) {
 
     /* Draw the vertices */
     glBindVertexArray(VAO);
-    glUseProgram(screen_shader);
     glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

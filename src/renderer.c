@@ -88,12 +88,12 @@ unsigned int initialize_vertices() {
                GL_STATIC_DRAW);
 
   /* position attribute */
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
   /* texture coord attribute */
+  glEnableVertexAttribArray(1);
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
                         (void *)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
 
   log_debug("Vertex data initialized successfully");
 
