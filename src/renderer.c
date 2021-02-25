@@ -186,23 +186,25 @@ void capture_screenshot() {
  * @brief Ensure the window is closed when the user presses the escape
  * key.
  *
- * @param window The current window.
- * @param shader_program Pointer to the shader program to update if needed.
- * @param fragment_shader_file The shader file to reload if needed.
+ * @param state The current state of the renderer.
  */
-void process_input(GLFWwindow *window, unsigned int *screen_shader,
-                   const char *const screen_shader_file,
-                   unsigned int *buffer_shader,
-                   const char *const buffer_shader_file) {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+void process_input(struct renderer_state *state) {
+  if (glfwGetKey(state->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     log_debug("Quitting");
-    glfwSetWindowShouldClose(window, true);
-  } else if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-    compile_shaders(screen_shader, screen_shader_file);
-    if (buffer_shader_file) {
-      compile_shaders(buffer_shader, buffer_shader_file);
+    glfwSetWindowShouldClose(state->window, true);
+  } else if (glfwGetKey(state->window, GLFW_KEY_R) == GLFW_PRESS) {
+    // reinitialize time and frame count
+    state->frame_count = 0;
+    state->prev_frame_count = 0;
+    glfwSetTime(0.0);
+    state->time = 0.0;
+    state->prev_time = 0.0;
+    // recompile shaders
+    compile_shaders(&state->screen_shader, state->screen_shader_file);
+    if (state->buffer_shader_file) {
+      compile_shaders(&state->buffer_shader, state->buffer_shader_file);
     }
-  } else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+  } else if (glfwGetKey(state->window, GLFW_KEY_S) == GLFW_PRESS) {
     capture_screenshot();
   }
 }
