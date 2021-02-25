@@ -56,28 +56,11 @@ int main(int argc, char *argv[]) {
     glUseProgram(buffer_shader);
     glUniform1i(glGetUniformLocation(buffer_shader, "u_texture"), 0);
 
-    /* Framebuffer */
-    glGenFramebuffers(1, &framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-    /* color attachment texture */
-    glGenTextures(1, &texture_color_buffer);
-    glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0,
-                 GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                           texture_color_buffer, 0);
-    /* check that the framebuffer is complete */
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-      log_error("Framebuffer is not complete");
+    if (initialize_framebuffer(&framebuffer, &texture_color_buffer, WINDOW_WIDTH, WINDOW_HEIGHT)) {
       glfwDestroyWindow(window);
       glfwTerminate();
       return EXIT_FAILURE;
-    } else {
-      log_debug("Framebuffer initialized and complete");
     }
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
 
   /* Drawing loop */

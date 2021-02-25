@@ -101,6 +101,40 @@ unsigned int initialize_vertices() {
 }
 
 /**
+ * @brief Initialize a framebuffer and the associated texture.
+ *
+ * @param framebuffer The framebuffer ID to be initialized.
+ * @param texture_color_buffer The texture ID to be initialized.
+ * @param texture_width The width of the desired texture image.
+ * @param texture_height The height of the desired texture image.
+ * @return 0 on success, 1 on failure.
+ */
+unsigned int initialize_framebuffer(unsigned int *framebuffer,
+                                    unsigned int *texture_color_buffer,
+                                    unsigned int texture_width,
+                                    unsigned int texture_height) {
+  glGenFramebuffers(1, framebuffer);
+  glBindFramebuffer(GL_FRAMEBUFFER, *framebuffer);
+  /* color attachment texture */
+  glGenTextures(1, texture_color_buffer);
+  glBindTexture(GL_TEXTURE_2D, *texture_color_buffer);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0,
+               GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                         *texture_color_buffer, 0);
+  /* check that the framebuffer is complete */
+  if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    log_error("Framebuffer is not complete");
+    return 1;
+  }
+  log_debug("Framebuffer initialized and complete");
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  return 0;
+}
+
+/**
  * @brief Callback to adjust the size of the viewport when the window
  * is resized.
  *
