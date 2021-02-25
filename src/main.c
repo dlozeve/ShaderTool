@@ -56,7 +56,8 @@ int main(int argc, char *argv[]) {
     glUseProgram(buffer_shader);
     glUniform1i(glGetUniformLocation(buffer_shader, "u_texture"), 0);
 
-    if (initialize_framebuffer(&framebuffer, &texture_color_buffer, WINDOW_WIDTH, WINDOW_HEIGHT)) {
+    if (initialize_framebuffer(&framebuffer, &texture_color_buffer,
+                               WINDOW_WIDTH, WINDOW_HEIGHT)) {
       glfwDestroyWindow(window);
       glfwTerminate();
       return EXIT_FAILURE;
@@ -64,21 +65,27 @@ int main(int argc, char *argv[]) {
   }
 
   /* Drawing loop */
-  size_t frame = 0;
+  size_t frame_count = 0;
+  size_t prev_frame_count = 0;
+  double time = 0;
+  double prev_time = 0;
   while (!glfwWindowShouldClose(window)) {
     process_input(window, &screen_shader, screen_shader_file, &buffer_shader,
                   buffer_shader_file);
 
     /* data required for uniforms */
-    float time = glfwGetTime();
+    time = glfwGetTime();
     int viewport[4] = {0};
     glGetIntegerv(GL_VIEWPORT, viewport);
     double mouse_x = 0, mouse_y = 0;
     glfwGetCursorPos(window, &mouse_x, &mouse_y);
 
-    if (frame % 100 == 0) {
-      log_debug("frame = %zu, time = %f, viewport = (%d, %d)", frame, time,
-                viewport[2], viewport[3]);
+    if (time - prev_time >= 1.0) {
+      double fps = (frame_count - prev_frame_count) / (time - prev_time);
+      log_debug("frame = %zu, time = %.2f, fps = %.2f, viewport = (%d, %d)", frame_count,
+                time, fps, viewport[2], viewport[3]);
+      prev_frame_count = frame_count;
+      prev_time = time;
     }
 
     if (buffer_shader_file) {
@@ -91,7 +98,7 @@ int main(int argc, char *argv[]) {
 
       /* Setup uniforms */
       glUseProgram(buffer_shader);
-      glUniform1ui(glGetUniformLocation(buffer_shader, "u_frame"), frame);
+      glUniform1ui(glGetUniformLocation(buffer_shader, "u_frame"), frame_count);
       glUniform1f(glGetUniformLocation(buffer_shader, "u_time"), time);
       glUniform2f(glGetUniformLocation(buffer_shader, "u_resolution"),
                   viewport[2], viewport[3]);
@@ -113,7 +120,7 @@ int main(int argc, char *argv[]) {
 
     /* Setup uniforms */
     glUseProgram(screen_shader);
-    glUniform1ui(glGetUniformLocation(screen_shader, "u_frame"), frame);
+    glUniform1ui(glGetUniformLocation(screen_shader, "u_frame"), frame_count);
     glUniform1f(glGetUniformLocation(screen_shader, "u_time"), time);
     glUniform2f(glGetUniformLocation(screen_shader, "u_resolution"),
                 viewport[2], viewport[3]);
@@ -128,7 +135,7 @@ int main(int argc, char *argv[]) {
 
     glfwSwapBuffers(window);
     glfwPollEvents();
-    frame++;
+    frame_count++;
   }
 
   glfwDestroyWindow(window);
