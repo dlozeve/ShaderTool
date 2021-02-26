@@ -205,16 +205,20 @@ void process_input(struct renderer_state *state) {
     } else if (num_read <= 0) {
       log_error("[inotify] Could not read inotify state");
     } else {
-      log_debug("[inotify] File changed on disk, reloading shaders");
       should_reload = true;
     }
   }
 
   if (glfwGetKey(state->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-    log_debug("Quitting");
+    log_info("Quitting");
     glfwSetWindowShouldClose(state->window, true);
   } else if (should_reload ||
              glfwGetKey(state->window, GLFW_KEY_R) == GLFW_PRESS) {
+    if (should_reload) {
+      log_info("File changed on disk, reloading shaders");
+    } else {
+      log_info("Reloading shaders");
+    }
     // reinitialize time and frame count
     state->frame_count = 0;
     state->prev_frame_count = 0;

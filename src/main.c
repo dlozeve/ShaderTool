@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
+  log_set_level(LOG_DEBUG);
+
   struct renderer_state state = {0};
 
   /* Create inotify instance */
@@ -32,7 +34,7 @@ int main(int argc, char *argv[]) {
   }
 
   state.screen_shader.filename = argv[1];
-  log_debug("Screen shader file: %s", state.screen_shader.filename);
+  log_info("Screen shader file: %s", state.screen_shader.filename);
 
   if (state.inotify_fd != -1) {
     state.screen_shader.wd = inotify_add_watch(
@@ -47,7 +49,7 @@ int main(int argc, char *argv[]) {
 
   if (argc >= 3) {
     state.buffer_shader.filename = argv[2];
-    log_debug("Buffer shader file: %s", state.buffer_shader.filename);
+    log_info("Buffer shader file: %s", state.buffer_shader.filename);
 
     if (state.inotify_fd != -1) {
       state.buffer_shader.wd = inotify_add_watch(
@@ -120,8 +122,8 @@ int main(int argc, char *argv[]) {
     if (state.time - state.prev_time >= 1.0) {
       double fps = (state.frame_count - state.prev_frame_count) /
                    (state.time - state.prev_time);
-      log_debug("frame = %zu, time = %.2f, fps = %.2f, viewport = (%d, %d)",
-                state.frame_count, state.time, fps, viewport[2], viewport[3]);
+      log_info("frame = %zu, time = %.2f, fps = %.2f, viewport = (%d, %d)",
+               state.frame_count, state.time, fps, viewport[2], viewport[3]);
       state.prev_frame_count = state.frame_count;
       state.prev_time = state.time;
     }
