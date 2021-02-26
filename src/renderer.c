@@ -194,14 +194,20 @@ void capture_screenshot() {
  */
 void process_input(struct renderer_state *state) {
   bool should_reload = false;
-  char buf[BUF_LEN] = {0};
-  int num_read = read(state->inotify_fd, buf, BUF_LEN);
-  if (num_read == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
-    // No event, do nothing
-  } else if (num_read <= 0) {
-    log_error("Could not read inotify state");
-  } else {
-    should_reload = true;
+
+  // Skip inotify checking if it's not available
+  if (state->inotify_fd != -1 &&
+      (state->screen_shader.wd != -1 || state->buffer_shader.wd != -1)) {
+    char buf[BUF_LEN] = {0};
+    int num_read = read(state->inotify_fd, buf, BUF_LEN);
+    if (num_read == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+      // No event, do nothing
+    } else if (num_read <= 0) {
+      log_error("[inotify] Could not read inotify state");
+    } else {
+      log_debug("[inotify] File changed on disk, reloading shaders");
+      should_reload = true;
+    }
   }
 
   if (glfwGetKey(state->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
