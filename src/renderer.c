@@ -1,14 +1,18 @@
 #include <FreeImage.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <errno.h>
 #include <stdlib.h>
+#include <sys/inotify.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "log.h"
 #include "renderer.h"
 #include "shaders.h"
 
 #define UNUSED(a) (void)a
+#define BUF_LEN (10 * (sizeof(struct inotify_event) + 1))
 
 /**
  * @brief Initialize GLFW and OpenGL, and create a window.
@@ -189,10 +193,22 @@ void capture_screenshot() {
  * @param state The current state of the renderer.
  */
 void process_input(struct renderer_state *state) {
+  bool should_reload = false;
+  char buf[BUF_LEN] = {0};
+  int num_read = read(state->inotify_fd, buf, BUF_LEN);
+  if (num_read == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+    // No event, do nothing
+  } else if (num_read <= 0) {
+    log_error("Could not read inotify state");
+  } else {
+    should_reload = true;
+  }
+
   if (glfwGetKey(state->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     log_debug("Quitting");
     glfwSetWindowShouldClose(state->window, true);
-  } else if (glfwGetKey(state->window, GLFW_KEY_R) == GLFW_PRESS) {
+  } else if (should_reload ||
+             glfwGetKey(state->window, GLFW_KEY_R) == GLFW_PRESS) {
     // reinitialize time and frame count
     state->frame_count = 0;
     state->prev_frame_count = 0;

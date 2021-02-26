@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <sys/inotify.h>
+#include <fcntl.h>
 
 #include "log.h"
 #include "renderer.h"
@@ -25,6 +26,8 @@ int main(int argc, char *argv[]) {
     perror("inotify_init");
     return EXIT_FAILURE;
   }
+  /* Set the inotify file descriptor to be non-blocking */
+  fcntl(state.inotify_fd, F_SETFL, O_NONBLOCK);
 
   state.screen_shader.filename = argv[1];
   state.screen_shader.wd =
