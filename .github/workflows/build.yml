@@ -1,0 +1,17 @@
+name: build
+
+on: push
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get install -y meson libglfw3-dev libglew-dev libfreeimage-dev
+      - name: Meson Build
+        run: |
+          meson build
+          ninja -C build
