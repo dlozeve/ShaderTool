@@ -200,9 +200,11 @@ void process_input(struct renderer_state *state) {
     state->time = 0.0;
     state->prev_time = 0.0;
     // recompile shaders
-    compile_shaders(&state->screen_shader, state->screen_shader_file);
-    if (state->buffer_shader_file) {
-      compile_shaders(&state->buffer_shader, state->buffer_shader_file);
+    compile_shaders(&state->screen_shader.program,
+                    state->screen_shader.filename);
+    if (state->buffer_shader.filename) {
+      compile_shaders(&state->buffer_shader.program,
+                      state->buffer_shader.filename);
     }
   } else if (glfwGetKey(state->window, GLFW_KEY_S) == GLFW_PRESS) {
     capture_screenshot();

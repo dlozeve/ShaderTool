@@ -16,12 +16,12 @@ int main(int argc, char *argv[]) {
   }
 
   struct renderer_state state = {0};
-  
-  state.screen_shader_file = argv[1];
-  log_debug("Screen shader file: %s", state.screen_shader_file);
+
+  state.screen_shader.filename = argv[1];
+  log_debug("Screen shader file: %s", state.screen_shader.filename);
   if (argc >= 3) {
-    state.buffer_shader_file = argv[2];
-    log_debug("Buffer shader file: %s", state.buffer_shader_file);
+    state.buffer_shader.filename = argv[2];
+    log_debug("Buffer shader file: %s", state.buffer_shader.filename);
   }
 
   state.window = initialize_window(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -32,30 +32,32 @@ int main(int argc, char *argv[]) {
 
   unsigned int VAO = initialize_vertices();
 
-  state.screen_shader = glCreateProgram();
-  if (!state.screen_shader) {
+  state.screen_shader.program = glCreateProgram();
+  if (!state.screen_shader.program) {
     log_error("Could not create screen shader program");
     glfwDestroyWindow(state.window);
     glfwTerminate();
     return EXIT_FAILURE;
   }
-  compile_shaders(&state.screen_shader, state.screen_shader_file);
-  glUseProgram(state.screen_shader);
-  glUniform1i(glGetUniformLocation(state.screen_shader, "u_texture"), 0);
+  compile_shaders(&state.screen_shader.program, state.screen_shader.filename);
+  glUseProgram(state.screen_shader.program);
+  glUniform1i(glGetUniformLocation(state.screen_shader.program, "u_texture"),
+              0);
 
   unsigned int framebuffer = 0;
   unsigned int texture_color_buffer = 0;
-  if (state.buffer_shader_file) {
-    state.buffer_shader = glCreateProgram();
-    if (!state.buffer_shader) {
+  if (state.buffer_shader.filename) {
+    state.buffer_shader.program = glCreateProgram();
+    if (!state.buffer_shader.program) {
       log_error("Could not create buffer shader program");
       glfwDestroyWindow(state.window);
       glfwTerminate();
       return EXIT_FAILURE;
     }
-    compile_shaders(&state.buffer_shader, state.buffer_shader_file);
-    glUseProgram(state.buffer_shader);
-    glUniform1i(glGetUniformLocation(state.buffer_shader, "u_texture"), 0);
+    compile_shaders(&state.buffer_shader.program, state.buffer_shader.filename);
+    glUseProgram(state.buffer_shader.program);
+    glUniform1i(glGetUniformLocation(state.buffer_shader.program, "u_texture"),
+                0);
 
     if (initialize_framebuffer(&framebuffer, &texture_color_buffer,
                                WINDOW_WIDTH, WINDOW_HEIGHT)) {
@@ -78,14 +80,15 @@ int main(int argc, char *argv[]) {
     glfwGetCursorPos(state.window, &mouse_x, &mouse_y);
 
     if (state.time - state.prev_time >= 1.0) {
-      double fps = (state.frame_count - state.prev_frame_count) / (state.time - state.prev_time);
+      double fps = (state.frame_count - state.prev_frame_count) /
+                   (state.time - state.prev_time);
       log_debug("frame = %zu, time = %.2f, fps = %.2f, viewport = (%d, %d)",
                 state.frame_count, state.time, fps, viewport[2], viewport[3]);
       state.prev_frame_count = state.frame_count;
       state.prev_time = state.time;
     }
 
-    if (state.buffer_shader_file) {
+    if (state.buffer_shader.filename) {
       /* bind the framebuffer and draw to it */
       glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
@@ -94,13 +97,16 @@ int main(int argc, char *argv[]) {
       glClear(GL_COLOR_BUFFER_BIT);
 
       /* Setup uniforms */
-      glUseProgram(state.buffer_shader);
-      glUniform1ui(glGetUniformLocation(state.buffer_shader, "u_frame"), state.frame_count);
-      glUniform1f(glGetUniformLocation(state.buffer_shader, "u_time"), state.time);
-      glUniform2f(glGetUniformLocation(state.buffer_shader, "u_resolution"),
-                  viewport[2], viewport[3]);
-      glUniform2f(glGetUniformLocation(state.buffer_shader, "u_mouse"), mouse_x,
-                  mouse_y);
+      glUseProgram(state.buffer_shader.program);
+      glUniform1ui(glGetUniformLocation(state.buffer_shader.program, "u_frame"),
+                   state.frame_count);
+      glUniform1f(glGetUniformLocation(state.buffer_shader.program, "u_time"),
+                  state.time);
+      glUniform2f(
+          glGetUniformLocation(state.buffer_shader.program, "u_resolution"),
+          viewport[2], viewport[3]);
+      glUniform2f(glGetUniformLocation(state.buffer_shader.program, "u_mouse"),
+                  mouse_x, mouse_y);
 
       /* Draw the vertices */
       glBindVertexArray(VAO);
@@ -116,13 +122,16 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* Setup uniforms */
-    glUseProgram(state.screen_shader);
-    glUniform1ui(glGetUniformLocation(state.screen_shader, "u_frame"), state.frame_count);
-    glUniform1f(glGetUniformLocation(state.screen_shader, "u_time"), state.time);
-    glUniform2f(glGetUniformLocation(state.screen_shader, "u_resolution"),
-                viewport[2], viewport[3]);
-    glUniform2f(glGetUniformLocation(state.screen_shader, "u_mouse"), mouse_x,
-                mouse_y);
+    glUseProgram(state.screen_shader.program);
+    glUniform1ui(glGetUniformLocation(state.screen_shader.program, "u_frame"),
+                 state.frame_count);
+    glUniform1f(glGetUniformLocation(state.screen_shader.program, "u_time"),
+                state.time);
+    glUniform2f(
+        glGetUniformLocation(state.screen_shader.program, "u_resolution"),
+        viewport[2], viewport[3]);
+    glUniform2f(glGetUniformLocation(state.screen_shader.program, "u_mouse"),
+                mouse_x, mouse_y);
 
     /* Draw the vertices */
     glBindVertexArray(VAO);
