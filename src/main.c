@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
+#include <sys/inotify.h>
 
 #include "log.h"
 #include "renderer.h"
@@ -17,10 +18,32 @@ int main(int argc, char *argv[]) {
 
   struct renderer_state state = {0};
 
+  /* Create inotify instance */
+  state.inotify_fd = inotify_init();
+  if (state.inotify_fd == -1) {
+    log_error("Cannot initialize inotify");
+    perror("inotify_init");
+    return EXIT_FAILURE;
+  }
+
   state.screen_shader.filename = argv[1];
+  state.screen_shader.wd =
+      inotify_add_watch(state.inotify_fd, state.screen_shader.filename, IN_MODIFY);
+  if (state.screen_shader.wd == -1) {
+    log_error("Cannot watch file %s", state.screen_shader.filename);
+    perror("inotify_add_watch");
+    return EXIT_FAILURE;
+  }
   log_debug("Screen shader file: %s", state.screen_shader.filename);
   if (argc >= 3) {
     state.buffer_shader.filename = argv[2];
+    state.buffer_shader.wd =
+        inotify_add_watch(state.inotify_fd, state.buffer_shader.filename, IN_MODIFY);
+    if (state.buffer_shader.wd == -1) {
+      log_error("Cannot watch file %s", state.buffer_shader.filename);
+      perror("inotify_add_watch");
+      return EXIT_FAILURE;
+    }
     log_debug("Buffer shader file: %s", state.buffer_shader.filename);
   }
 
