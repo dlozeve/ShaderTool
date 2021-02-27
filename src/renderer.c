@@ -2,7 +2,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <errno.h>
+#include <libgen.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/inotify.h>
 #include <time.h>
 #include <unistd.h>
@@ -152,18 +154,47 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
 }
 
 /**
- * @brief Captures a screenshot of the current window.
+ * @brief Return the file name without the leading directories and
+ * without the extension.
+ *
+ * @param filename The original filename.
+ * @return A newly allocated string containing the output of basename(3)
+ * without the extension.
+ */
+char *basename_without_suffix(const char *filename) {
+  char *name = strdup(filename);
+  name = basename(name);
+  log_debug("%s", name);
+  char *dot = strrchr(name, '.');
+  if (!dot || dot == name) {
+    return name;
+  }
+  *dot = '\0';
+  log_debug("%s", name);
+  return name;
+}
+
+/**
+ * @brief Capture a screenshot of the current window.
  *
  * Takes the dimensions of the viewport to save a pixel array of the
  * same dimensions. Uses FreeImage to create an image from the raw
  * pixels and save it to disk.
+ *
+ * @param state The renderer state, needed to get the name of the
+ * current shader and the frame count.
  */
-void capture_screenshot() {
+void capture_screenshot(struct renderer_state *state) {
   time_t now = time(NULL);
   struct tm *timenow = gmtime(&now);
   char image_filename[255] = {0};
-  strftime(image_filename, sizeof(image_filename),
-           "shadertool_%Y%m%d_%H%M%S.png", timenow);
+  char *shader_basename =
+      basename_without_suffix(state->screen_shader.filename);
+  snprintf(image_filename, sizeof(image_filename),
+           "%s_%zu_%d%02d%02d_%02d%02d%02d.png", shader_basename,
+           state->frame_count, timenow->tm_year + 1900, timenow->tm_mon,
+           timenow->tm_mday, timenow->tm_hour, timenow->tm_min,
+           timenow->tm_sec);
 
   int viewport[4] = {0};
   glGetIntegerv(GL_VIEWPORT, viewport);
@@ -233,6 +264,6 @@ void process_input(struct renderer_state *state) {
                       state->buffer_shader.filename);
     }
   } else if (glfwGetKey(state->window, GLFW_KEY_S) == GLFW_PRESS) {
-    capture_screenshot();
+    capture_screenshot(state);
   }
 }

@@ -4,7 +4,6 @@ project(
   default_options: [
     'buildtype=debugoptimized',
     'warning_level=3',
-    'c_std=c99',
     'werror=true',
   ]
 )
