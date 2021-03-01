@@ -1,5 +1,6 @@
 * ShaderTool
 
 [[https://github.com/dlozeve/ShaderTool/actions/workflows/build.yml][https://github.com/dlozeve/ShaderTool/actions/workflows/build.yml/badge.svg]]
+[[https://dlozeve.github.io/ShaderTool/][https://github.com/dlozeve/ShaderTool/actions/workflows/docs.yml/badge.svg]]
 
 Live tool for developing OpenGL shaders interactively.
