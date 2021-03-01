@@ -16,7 +16,7 @@ freeimage_dep = cc.find_library('freeimage')
 
 executable(
   'shadertool',
-  sources: ['src/main.c', 'src/renderer.c', 'src/shaders.c', 'src/log.c'],
+  sources: ['src/main.c', 'src/renderer.c', 'src/shaders.c', 'src/io.c', 'src/log.c'],
   dependencies: [glfw_dep, glew_dep, freeimage_dep],
   c_args: '-DLOG_USE_COLOR',
 )

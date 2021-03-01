@@ -34,8 +34,5 @@ unsigned int initialize_framebuffer(unsigned int *framebuffer,
                                     unsigned int texture_width,
                                     unsigned int texture_height);
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-char *basename_without_suffix(const char *filename);
-void capture_screenshot(struct renderer_state *state);
-void process_input(struct renderer_state *state);
 
 #endif /* RENDERER_H */

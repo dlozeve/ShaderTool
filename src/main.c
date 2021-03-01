@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <sys/inotify.h>
 
+#include "io.h"
 #include "log.h"
 #include "renderer.h"
 #include "shaders.h"
