@@ -99,9 +99,9 @@ Include dependency graph for shaders.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a448504c6f7a82a9ff3f86221a6757703"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8c.html#a448504c6f7a82a9ff3f86221a6757703">initialize_shaders</a> (struct <a class="el" href="structrenderer__state.html">renderer_state</a> *state, const char *shader_file, const char *buffer_file)</td></tr>
-<tr class="memdesc:a448504c6f7a82a9ff3f86221a6757703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize shaders and setup inotify if required.  <a href="shaders_8c.html#a448504c6f7a82a9ff3f86221a6757703">More...</a><br /></td></tr>
-<tr class="separator:a448504c6f7a82a9ff3f86221a6757703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af837a2c5bab4e34d763335c71a4b8a12"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8c.html#af837a2c5bab4e34d763335c71a4b8a12">initialize_shaders</a> (struct <a class="el" href="structrenderer__state.html">renderer_state</a> *state, const char *shader_file, const char *buffer_file, int texture_width, int texture_height)</td></tr>
+<tr class="memdesc:af837a2c5bab4e34d763335c71a4b8a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize shaders, compile them, and create the required texture for the buffer shader.  <a href="shaders_8c.html#af837a2c5bab4e34d763335c71a4b8a12">More...</a><br /></td></tr>
+<tr class="separator:af837a2c5bab4e34d763335c71a4b8a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8c.html#a199bc15d3bf9a2b6948bfbf44e90652c">compile_shaders</a> (unsigned int *shader_program, const char *const fragment_shader_file)</td></tr>
 <tr class="memdesc:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile shaders from source files.  <a href="shaders_8c.html#a199bc15d3bf9a2b6948bfbf44e90652c">More...</a><br /></td></tr>
 <tr class="separator:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,8 +149,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a448504c6f7a82a9ff3f86221a6757703"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a448504c6f7a82a9ff3f86221a6757703">&#9670;&nbsp;</a></span>initialize_shaders()</h2>
+<a id="af837a2c5bab4e34d763335c71a4b8a12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af837a2c5bab4e34d763335c71a4b8a12">&#9670;&nbsp;</a></span>initialize_shaders()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +171,19 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>buffer_file</em>&#160;</td>
+          <td class="paramname"><em>buffer_file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>texture_width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>texture_height</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -181,12 +193,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize shaders and setup inotify if required. </p>
+<p>Initialize shaders, compile them, and create the required texture for the buffer shader. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td>The target renderer state. </td></tr>
     <tr><td class="paramname">shader_file</td><td>The file name of the screen shader. </td></tr>
     <tr><td class="paramname">buffer_file</td><td>The file name of the buffer shader, or NULL if no buffer shader. </td></tr>
+    <tr><td class="paramname">texture_width</td><td>The width of the texture for the buffer shader. </td></tr>
+    <tr><td class="paramname">texture_height</td><td>The height of the texture for the buffer shader. </td></tr>
   </table>
   </dd>
 </dl>

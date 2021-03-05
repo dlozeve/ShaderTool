@@ -89,6 +89,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:a20e2c1fbe9446676f4cce1b56f501585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39726f9047174897d3cd54bf34f0c918"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structshader__state.html">shader_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrenderer__state.html#a39726f9047174897d3cd54bf34f0c918">buffer_shader</a></td></tr>
 <tr class="separator:a39726f9047174897d3cd54bf34f0c918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36c3b08d88805a322c446a42f09a9e92"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrenderer__state.html#a36c3b08d88805a322c446a42f09a9e92">framebuffer</a></td></tr>
+<tr class="separator:a36c3b08d88805a322c446a42f09a9e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af738cddb5b77a8d8cf765d98953f8b1d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrenderer__state.html#af738cddb5b77a8d8cf765d98953f8b1d">texture_color_buffer</a></td></tr>
+<tr class="separator:af738cddb5b77a8d8cf765d98953f8b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36edaf5f4fdce89e7dc3a1d47cf96795"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrenderer__state.html#a36edaf5f4fdce89e7dc3a1d47cf96795">inotify_fd</a></td></tr>
 <tr class="separator:a36edaf5f4fdce89e7dc3a1d47cf96795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6592afba4a3b9fcc76eb5853b9fecb3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrenderer__state.html#ab6592afba4a3b9fcc76eb5853b9fecb3">frame_count</a></td></tr>
@@ -130,6 +134,21 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Frame count since the start of the render loop. </p>
+
+</div>
+</div>
+<a id="a36c3b08d88805a322c446a42f09a9e92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36c3b08d88805a322c446a42f09a9e92">&#9670;&nbsp;</a></span>framebuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int renderer_state::framebuffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Framebuffer. </p>
 
 </div>
 </div>
@@ -190,6 +209,21 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Shader for the main screen. </p>
+
+</div>
+</div>
+<a id="af738cddb5b77a8d8cf765d98953f8b1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af738cddb5b77a8d8cf765d98953f8b1d">&#9670;&nbsp;</a></span>texture_color_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int renderer_state::texture_color_buffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Texture where the framebuffer renders. </p>
 
 </div>
 </div>
