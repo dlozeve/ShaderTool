@@ -25,14 +25,16 @@ static struct argp_option options[] = {
     {"verbose", 'v', 0, 0, "Produce verbose output", 0},
     {"silent", 's', 0, 0, "Don't produce any output", 0},
     {"quiet", 'q', 0, OPTION_ALIAS, 0, 0},
+    {"auto-reload", 'r', 0, 0, "Automatically reload on save", 0},
     {"buffer", 'b', "FILE", 0, "Source file of the buffer fragment shader", 0},
     {0},
 };
 
 struct arguments {
   char *shader_file;
-  int verbose;
-  int silent;
+  bool verbose;
+  bool silent;
+  bool autoreload;
   char *buffer_file;
 };
 
@@ -46,6 +48,9 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
   case 's':
   case 'q':
     arguments->silent = true;
+    break;
+  case 'r':
+    arguments->autoreload = true;
     break;
   case 'b':
     arguments->buffer_file = arg;
@@ -80,6 +85,7 @@ int main(int argc, char *argv[]) {
   /* Default values */
   arguments.verbose = false;
   arguments.silent = false;
+  arguments.autoreload = false;
   arguments.buffer_file = 0;
 
   argp_parse(&argp_parser, argc, argv, 0, 0, &arguments);
@@ -94,16 +100,20 @@ int main(int argc, char *argv[]) {
 
   struct renderer_state state = {0};
 
-  /* Create inotify instance */
-  state.inotify_fd = inotify_init();
-  if (state.inotify_fd == -1) {
-    log_warn("[inotify] Cannot initialize inotify");
-    perror("inotify_init");
-  } else {
-    /* Set the inotify file descriptor to be non-blocking */
-    if (!fcntl(state.inotify_fd, F_SETFL, O_NONBLOCK)) {
-      log_debug("[inotify] Initialized successfully");
+  if (arguments.autoreload) {
+    /* Create inotify instance */
+    state.inotify_fd = inotify_init();
+    if (state.inotify_fd == -1) {
+      log_warn("[inotify] Cannot initialize inotify");
+      perror("inotify_init");
+    } else {
+      /* Set the inotify file descriptor to be non-blocking */
+      if (!fcntl(state.inotify_fd, F_SETFL, O_NONBLOCK)) {
+        log_debug("[inotify] Initialized successfully");
+      }
     }
+  } else {
+    state.inotify_fd = -1;
   }
 
   state.screen_shader.filename = arguments.shader_file;
