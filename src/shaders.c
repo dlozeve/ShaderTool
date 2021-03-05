@@ -1,52 +1,55 @@
 #include <GL/glew.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/inotify.h>
 
 #include "log.h"
+#include "renderer.h"
+#include "shaders.h"
 
 /**
- * @brief Reads a file in a heap-allocated buffer.
+ * @brief Initialize shaders and setup inotify if required.
  *
- * This function computes the length of the file, allocate a buffer of
- * the correct size, and reads the file in the buffer. Returns `NULL`
- * on error.
- *
- * @param filename The file to read.
- * @return A buffer containing the contents of the file, or `NULL` if
- * there was an error.
+ * @param state The target renderer state.
+ * @param shader_file The file name of the screen shader.
+ * @param buffer_file The file name of the buffer shader, or NULL if no buffer
+ * shader.
+ * @return 0 on success, 1 on error.
  */
-char *read_file(const char *const filename) {
-  FILE *fd = fopen(filename, "r");
-  if (fd == NULL) {
-    log_error("Could not open file %s", filename);
-    return NULL;
+int initialize_shaders(struct renderer_state *state, const char *shader_file,
+                       const char *buffer_file) {
+  state->screen_shader.filename = shader_file;
+  log_info("Screen shader file: %s", state->screen_shader.filename);
+
+  if (state->inotify_fd != -1) {
+    state->screen_shader.wd = inotify_add_watch(
+        state->inotify_fd, state->screen_shader.filename, IN_MODIFY);
+    if (state->screen_shader.wd == -1) {
+      log_warn("[inotify] Cannot watch file %s", state->screen_shader.filename);
+      perror("inotify_add_watch");
+    } else {
+      log_debug("[inotify] Watching file %s", state->screen_shader.filename);
+    }
   }
 
-  if (fseek(fd, 0, SEEK_END) == -1) {
-    perror("fseek");
-    return NULL;
-  }
-  long size = ftell(fd);
-  if (size == -1) {
-    perror("ftell");
-    return NULL;
-  }
-  rewind(fd);
-  char *buf = calloc(size + 1, 1);
-  if (buf == NULL) {
-    log_error("Failed to allocate memory to read file %s", filename);
-    return NULL;
+  if (buffer_file) {
+    state->buffer_shader.filename = buffer_file;
+    log_info("Buffer shader file: %s", state->buffer_shader.filename);
+
+    if (state->inotify_fd != -1) {
+      state->buffer_shader.wd = inotify_add_watch(
+          state->inotify_fd, state->buffer_shader.filename, IN_MODIFY);
+      if (state->buffer_shader.wd == -1) {
+        log_warn("[inotify] Cannot watch file %s",
+                 state->buffer_shader.filename);
+        perror("inotify_add_watch");
+      } else {
+        log_debug("[inotify] Watching file %s", state->buffer_shader.filename);
+      }
+    }
   }
 
-  long bytes_read = fread(buf, 1, size, fd);
-  if (bytes_read != size) {
-    log_error("Failed to read file %s (%ld bytes read out of %ld total)",
-              filename, bytes_read, size);
-    return NULL;
-  }
-
-  fclose(fd);
-  return buf;
+  return 0;
 }
 
 /**
@@ -126,4 +129,49 @@ int compile_shaders(unsigned int *shader_program,
   log_debug("Shaders compiled successfully");
 
   return 0;
+}
+
+/**
+ * @brief Reads a file in a heap-allocated buffer.
+ *
+ * This function computes the length of the file, allocate a buffer of
+ * the correct size, and reads the file in the buffer. Returns `NULL`
+ * on error.
+ *
+ * @param filename The file to read.
+ * @return A buffer containing the contents of the file, or `NULL` if
+ * there was an error.
+ */
+char *read_file(const char *const filename) {
+  FILE *fd = fopen(filename, "r");
+  if (fd == NULL) {
+    log_error("Could not open file %s", filename);
+    return NULL;
+  }
+
+  if (fseek(fd, 0, SEEK_END) == -1) {
+    perror("fseek");
+    return NULL;
+  }
+  long size = ftell(fd);
+  if (size == -1) {
+    perror("ftell");
+    return NULL;
+  }
+  rewind(fd);
+  char *buf = calloc(size + 1, 1);
+  if (buf == NULL) {
+    log_error("Failed to allocate memory to read file %s", filename);
+    return NULL;
+  }
+
+  long bytes_read = fread(buf, 1, size, fd);
+  if (bytes_read != size) {
+    log_error("Failed to read file %s (%ld bytes read out of %ld total)",
+              filename, bytes_read, size);
+    return NULL;
+  }
+
+  fclose(fd);
+  return buf;
 }

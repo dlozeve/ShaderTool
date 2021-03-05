@@ -116,36 +116,7 @@ int main(int argc, char *argv[]) {
     state.inotify_fd = -1;
   }
 
-  state.screen_shader.filename = arguments.shader_file;
-  log_info("Screen shader file: %s", state.screen_shader.filename);
-
-  if (state.inotify_fd != -1) {
-    state.screen_shader.wd = inotify_add_watch(
-        state.inotify_fd, state.screen_shader.filename, IN_MODIFY);
-    if (state.screen_shader.wd == -1) {
-      log_warn("[inotify] Cannot watch file %s", state.screen_shader.filename);
-      perror("inotify_add_watch");
-    } else {
-      log_debug("[inotify] Watching file %s", state.screen_shader.filename);
-    }
-  }
-
-  if (arguments.buffer_file) {
-    state.buffer_shader.filename = arguments.buffer_file;
-    log_info("Buffer shader file: %s", state.buffer_shader.filename);
-
-    if (state.inotify_fd != -1) {
-      state.buffer_shader.wd = inotify_add_watch(
-          state.inotify_fd, state.buffer_shader.filename, IN_MODIFY);
-      if (state.buffer_shader.wd == -1) {
-        log_warn("[inotify] Cannot watch file %s",
-                 state.buffer_shader.filename);
-        perror("inotify_add_watch");
-      } else {
-        log_debug("[inotify] Watching file %s", state.buffer_shader.filename);
-      }
-    }
-  }
+  initialize_shaders(&state, arguments.shader_file, arguments.buffer_file);
 
   state.window = initialize_window(WINDOW_WIDTH, WINDOW_HEIGHT);
   if (state.window == NULL) {
