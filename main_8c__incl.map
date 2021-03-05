@@ -1,12 +1,13 @@
 <map id="src/main.c" name="src/main.c">
-<area shape="rect" id="node1" title=" " alt="" coords="353,5,442,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="385,5,474,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,91,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="255,229,366,256"/>
+<area shape="rect" id="node3" title=" " alt="" coords="299,229,410,256"/>
 <area shape="rect" id="node4" title=" " alt="" coords="166,80,229,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="253,80,323,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="348,80,447,107"/>
-<area shape="rect" id="node7" href="$io_8h.html" title=" " alt="" coords="471,80,518,107"/>
-<area shape="rect" id="node8" href="$renderer_8h.html" title=" " alt="" coords="451,155,539,181"/>
-<area shape="rect" id="node9" title=" " alt="" coords="594,80,649,107"/>
-<area shape="rect" id="node10" href="$shaders_8h.html" title=" " alt="" coords="673,80,759,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="253,80,315,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="339,80,410,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="435,80,533,107"/>
+<area shape="rect" id="node8" href="$io_8h.html" title=" " alt="" coords="558,80,605,107"/>
+<area shape="rect" id="node9" href="$renderer_8h.html" title=" " alt="" coords="568,155,656,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="681,80,735,107"/>
+<area shape="rect" id="node11" href="$shaders_8h.html" title=" " alt="" coords="760,80,845,107"/>
 </map>

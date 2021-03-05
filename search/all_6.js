@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['read_5ffile_20',['read_file',['../shaders_8c.html#abf2fc422517537eba9784a4cb7ecab69',1,'read_file(const char *const filename):&#160;shaders.c'],['../shaders_8h.html#abf2fc422517537eba9784a4cb7ecab69',1,'read_file(const char *const filename):&#160;shaders.c']]],
-  ['renderer_2ec_21',['renderer.c',['../renderer_8c.html',1,'']]],
-  ['renderer_2eh_22',['renderer.h',['../renderer_8h.html',1,'']]],
-  ['renderer_5fstate_23',['renderer_state',['../structrenderer__state.html',1,'']]]
+  ['prev_5fframe_5fcount_22',['prev_frame_count',['../structrenderer__state.html#a823e5fe4cf25de6572b02c4278f24a47',1,'renderer_state']]],
+  ['prev_5ftime_23',['prev_time',['../structrenderer__state.html#a774cdc17c1ec071da811f56ffd4e090b',1,'renderer_state']]],
+  ['process_5finput_24',['process_input',['../io_8c.html#a526d50cc66c2573b2e5b96c7256e9fae',1,'process_input(struct renderer_state *state):&#160;io.c'],['../io_8h.html#a526d50cc66c2573b2e5b96c7256e9fae',1,'process_input(struct renderer_state *state):&#160;io.c']]],
+  ['program_25',['program',['../structshader__state.html#a585871ab45d0a6f6b0f5bacbccce0896',1,'shader_state']]]
 ];

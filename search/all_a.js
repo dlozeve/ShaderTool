@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['wd_30',['wd',['../structshader__state.html#a64eb6436823980d957e5fe2937b2779c',1,'shader_state']]],
-  ['window_31',['window',['../structrenderer__state.html#a66a324cf71a869d65347455d97f82d33',1,'renderer_state']]],
-  ['window_5fheight_32',['WINDOW_HEIGHT',['../main_8c.html#a5473cf64fa979b48335079c99532e243',1,'main.c']]],
-  ['window_5fwidth_33',['WINDOW_WIDTH',['../main_8c.html#a498d9f026138406895e9a34b504ac6a6',1,'main.c']]]
+  ['unused_37',['UNUSED',['../renderer_8c.html#aa2c1c2787f4fc780b0a902fc66d5c3ce',1,'renderer.c']]]
 ];

@@ -1,7 +1,9 @@
 <map id="src/renderer.h" name="src/renderer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="113,5,224,32"/>
-<area shape="rect" id="node2" href="$io_8c.html" title=" " alt="" coords="5,80,73,107"/>
-<area shape="rect" id="node3" href="$io_8h.html" title=" " alt="" coords="98,80,167,107"/>
-<area shape="rect" id="node4" href="$main_8c.html" title=" " alt="" coords="124,155,213,181"/>
-<area shape="rect" id="node5" href="$renderer_8c.html" title=" " alt="" coords="243,80,353,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="163,5,273,32"/>
+<area shape="rect" id="node2" href="$io_8c.html" title=" " alt="" coords="5,155,73,181"/>
+<area shape="rect" id="node3" href="$shaders_8h.html" title=" " alt="" coords="36,80,144,107"/>
+<area shape="rect" id="node4" href="$main_8c.html" title=" " alt="" coords="137,155,227,181"/>
+<area shape="rect" id="node5" href="$shaders_8c.html" title=" " alt="" coords="262,155,369,181"/>
+<area shape="rect" id="node6" href="$io_8h.html" title=" " alt="" coords="219,80,289,107"/>
+<area shape="rect" id="node7" href="$renderer_8c.html" title=" " alt="" coords="364,80,475,107"/>
 </map>

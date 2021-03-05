@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['basename_5fwithout_5fsuffix_0',['basename_without_suffix',['../io_8c.html#a04487b3f64fdc93c3ce0037ca16cbff0',1,'basename_without_suffix(const char *filename):&#160;io.c'],['../io_8h.html#a04487b3f64fdc93c3ce0037ca16cbff0',1,'basename_without_suffix(const char *filename):&#160;io.c']]],
-  ['buf_5flen_1',['BUF_LEN',['../io_8c.html#a8b5839f71a3b6e7d64b2d5e9967e3dd1',1,'io.c']]],
-  ['buffer_5fshader_2',['buffer_shader',['../structrenderer__state.html#a39726f9047174897d3cd54bf34f0c918',1,'renderer_state']]]
+  ['argp_5fprogram_5fbug_5faddress_0',['argp_program_bug_address',['../main_8c.html#aaa037e59f26a80a8a2e35e6f2364004d',1,'main.c']]],
+  ['argp_5fprogram_5fversion_1',['argp_program_version',['../main_8c.html#a62f73ea01c816f1996aed4c66f57c4fb',1,'main.c']]],
+  ['arguments_2',['arguments',['../structarguments.html',1,'']]],
+  ['autoreload_3',['autoreload',['../structarguments.html#aef0b289368d537231ead5d0e1e2c703f',1,'arguments']]]
 ];

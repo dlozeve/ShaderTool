@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['filename_5',['filename',['../structshader__state.html#a4a39bb26de28029c609c6c2c3dbf92fc',1,'shader_state']]],
-  ['frame_5fcount_6',['frame_count',['../structrenderer__state.html#ab6592afba4a3b9fcc76eb5853b9fecb3',1,'renderer_state']]],
-  ['framebuffer_5fsize_5fcallback_7',['framebuffer_size_callback',['../renderer_8c.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;renderer.c'],['../renderer_8h.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;renderer.c']]]
+  ['capture_5fscreenshot_8',['capture_screenshot',['../io_8c.html#a3055c0f3882078342855d3eae628c488',1,'capture_screenshot(struct renderer_state *state):&#160;io.c'],['../io_8h.html#a3055c0f3882078342855d3eae628c488',1,'capture_screenshot(struct renderer_state *state):&#160;io.c']]],
+  ['compile_5fshaders_9',['compile_shaders',['../shaders_8c.html#a199bc15d3bf9a2b6948bfbf44e90652c',1,'compile_shaders(unsigned int *shader_program, const char *const fragment_shader_file):&#160;shaders.c'],['../shaders_8h.html#a199bc15d3bf9a2b6948bfbf44e90652c',1,'compile_shaders(unsigned int *shader_program, const char *const fragment_shader_file):&#160;shaders.c']]]
 ];

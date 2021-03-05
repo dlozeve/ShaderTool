@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['screen_5fshader_60',['screen_shader',['../structrenderer__state.html#a20e2c1fbe9446676f4cce1b56f501585',1,'renderer_state']]]
+  ['prev_5fframe_5fcount_72',['prev_frame_count',['../structrenderer__state.html#a823e5fe4cf25de6572b02c4278f24a47',1,'renderer_state']]],
+  ['prev_5ftime_73',['prev_time',['../structrenderer__state.html#a774cdc17c1ec071da811f56ffd4e090b',1,'renderer_state']]],
+  ['program_74',['program',['../structshader__state.html#a585871ab45d0a6f6b0f5bacbccce0896',1,'shader_state']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['filename_54',['filename',['../structshader__state.html#a4a39bb26de28029c609c6c2c3dbf92fc',1,'shader_state']]],
-  ['frame_5fcount_55',['frame_count',['../structrenderer__state.html#ab6592afba4a3b9fcc76eb5853b9fecb3',1,'renderer_state']]]
+  ['buffer_5ffile_67',['buffer_file',['../structarguments.html#a89b6196d0bc9b0d599ac3560af62a0e7',1,'arguments']]],
+  ['buffer_5fshader_68',['buffer_shader',['../structrenderer__state.html#a39726f9047174897d3cd54bf34f0c918',1,'renderer_state']]]
 ];

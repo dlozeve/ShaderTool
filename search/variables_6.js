@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wd_62',['wd',['../structshader__state.html#a64eb6436823980d957e5fe2937b2779c',1,'shader_state']]],
-  ['window_63',['window',['../structrenderer__state.html#a66a324cf71a869d65347455d97f82d33',1,'renderer_state']]]
+  ['time_78',['time',['../structrenderer__state.html#ab0eb1b70130c2abfed2e2366390ca20f',1,'renderer_state']]]
 ];

@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['initialize_5fframebuffer_8',['initialize_framebuffer',['../renderer_8c.html#a5d8bc1fbae1bbe4bd2e70c9b645875ab',1,'initialize_framebuffer(unsigned int *framebuffer, unsigned int *texture_color_buffer, unsigned int texture_width, unsigned int texture_height):&#160;renderer.c'],['../renderer_8h.html#a5d8bc1fbae1bbe4bd2e70c9b645875ab',1,'initialize_framebuffer(unsigned int *framebuffer, unsigned int *texture_color_buffer, unsigned int texture_width, unsigned int texture_height):&#160;renderer.c']]],
-  ['initialize_5fvertices_9',['initialize_vertices',['../renderer_8c.html#a934ec25611d153f2e7f357573ade2061',1,'initialize_vertices():&#160;renderer.c'],['../renderer_8h.html#a934ec25611d153f2e7f357573ade2061',1,'initialize_vertices():&#160;renderer.c']]],
-  ['initialize_5fwindow_10',['initialize_window',['../renderer_8c.html#a906b1457eeeaa2d7a9655343af151f66',1,'initialize_window(int width, int height):&#160;renderer.c'],['../renderer_8h.html#a906b1457eeeaa2d7a9655343af151f66',1,'initialize_window(int width, int height):&#160;renderer.c']]],
-  ['inotify_5ffd_11',['inotify_fd',['../structrenderer__state.html#a36edaf5f4fdce89e7dc3a1d47cf96795',1,'renderer_state']]],
-  ['io_2ec_12',['io.c',['../io_8c.html',1,'']]],
-  ['io_2eh_13',['io.h',['../io_8h.html',1,'']]]
+  ['filename_10',['filename',['../structshader__state.html#a4a39bb26de28029c609c6c2c3dbf92fc',1,'shader_state']]],
+  ['frame_5fcount_11',['frame_count',['../structrenderer__state.html#ab6592afba4a3b9fcc76eb5853b9fecb3',1,'renderer_state']]],
+  ['framebuffer_5fsize_5fcallback_12',['framebuffer_size_callback',['../renderer_8c.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;renderer.c'],['../renderer_8h.html#a5180f7bf2b71421af837035824a8c8ac',1,'framebuffer_size_callback(GLFWwindow *window, int width, int height):&#160;renderer.c']]]
 ];

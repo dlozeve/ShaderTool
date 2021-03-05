@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['inotify_5ffd_56',['inotify_fd',['../structrenderer__state.html#a36edaf5f4fdce89e7dc3a1d47cf96795',1,'renderer_state']]]
+  ['filename_69',['filename',['../structshader__state.html#a4a39bb26de28029c609c6c2c3dbf92fc',1,'shader_state']]],
+  ['frame_5fcount_70',['frame_count',['../structrenderer__state.html#ab6592afba4a3b9fcc76eb5853b9fecb3',1,'renderer_state']]]
 ];

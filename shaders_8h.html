@@ -73,14 +73,26 @@ $(function() {
 <div class="title">shaders.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &quot;<a class="el" href="renderer_8h_source.html">renderer.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for shaders.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="shaders_8h__incl.png" border="0" usemap="#src_2shaders_8h" alt=""/></div>
+<map name="src_2shaders_8h" id="src_2shaders_8h">
+<area shape="rect" title=" " alt="" coords="7,5,115,32"/>
+<area shape="rect" href="renderer_8h.html" title=" " alt="" coords="17,80,105,107"/>
+<area shape="rect" title=" " alt="" coords="5,155,116,181"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="shaders_8h__dep__incl.png" border="0" usemap="#src_2shaders_8hdep" alt=""/></div>
 <map name="src_2shaders_8hdep" id="src_2shaders_8hdep">
-<area shape="rect" title=" " alt="" coords="36,5,144,32"/>
+<area shape="rect" title=" " alt="" coords="88,5,196,32"/>
 <area shape="rect" href="io_8c.html" title=" " alt="" coords="5,80,73,107"/>
 <area shape="rect" href="main_8c.html" title=" " alt="" coords="97,80,187,107"/>
+<area shape="rect" href="shaders_8c.html" title=" " alt="" coords="211,80,318,107"/>
 </map>
 </div>
 </div>
@@ -88,12 +100,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abf2fc422517537eba9784a4cb7ecab69"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8h.html#abf2fc422517537eba9784a4cb7ecab69">read_file</a> (const char *const filename)</td></tr>
-<tr class="memdesc:abf2fc422517537eba9784a4cb7ecab69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a file in a heap-allocated buffer.  <a href="shaders_8h.html#abf2fc422517537eba9784a4cb7ecab69">More...</a><br /></td></tr>
-<tr class="separator:abf2fc422517537eba9784a4cb7ecab69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a448504c6f7a82a9ff3f86221a6757703"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8h.html#a448504c6f7a82a9ff3f86221a6757703">initialize_shaders</a> (struct <a class="el" href="structrenderer__state.html">renderer_state</a> *state, const char *shader_file, const char *buffer_file)</td></tr>
+<tr class="memdesc:a448504c6f7a82a9ff3f86221a6757703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize shaders and setup inotify if required.  <a href="shaders_8h.html#a448504c6f7a82a9ff3f86221a6757703">More...</a><br /></td></tr>
+<tr class="separator:a448504c6f7a82a9ff3f86221a6757703"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8h.html#a199bc15d3bf9a2b6948bfbf44e90652c">compile_shaders</a> (unsigned int *shader_program, const char *const fragment_shader_file)</td></tr>
 <tr class="memdesc:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile shaders from source files.  <a href="shaders_8h.html#a199bc15d3bf9a2b6948bfbf44e90652c">More...</a><br /></td></tr>
 <tr class="separator:a199bc15d3bf9a2b6948bfbf44e90652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf2fc422517537eba9784a4cb7ecab69"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shaders_8h.html#abf2fc422517537eba9784a4cb7ecab69">read_file</a> (const char *const filename)</td></tr>
+<tr class="memdesc:abf2fc422517537eba9784a4cb7ecab69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a file in a heap-allocated buffer.  <a href="shaders_8h.html#abf2fc422517537eba9784a4cb7ecab69">More...</a><br /></td></tr>
+<tr class="separator:abf2fc422517537eba9784a4cb7ecab69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a199bc15d3bf9a2b6948bfbf44e90652c"></a>
@@ -128,6 +143,51 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">shader_program</td><td>Pointer to the ID of the shader program where the shaders will be stored. </td></tr>
     <tr><td class="paramname">fragment_shader_file</td><td>File name of the fragment shader. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, 1 on error. </dd></dl>
+
+</div>
+</div>
+<a id="a448504c6f7a82a9ff3f86221a6757703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a448504c6f7a82a9ff3f86221a6757703">&#9670;&nbsp;</a></span>initialize_shaders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int initialize_shaders </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structrenderer__state.html">renderer_state</a> *&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>shader_file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>buffer_file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize shaders and setup inotify if required. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The target renderer state. </td></tr>
+    <tr><td class="paramname">shader_file</td><td>The file name of the screen shader. </td></tr>
+    <tr><td class="paramname">buffer_file</td><td>The file name of the buffer shader, or NULL if no buffer shader. </td></tr>
   </table>
   </dd>
 </dl>

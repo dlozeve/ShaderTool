@@ -68,14 +68,17 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">main.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;GL/glew.h&gt;</code><br />
 <code>#include &lt;GLFW/glfw3.h&gt;</code><br />
+<code>#include &lt;argp.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;sys/inotify.h&gt;</code><br />
@@ -88,19 +91,25 @@ Include dependency graph for main.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8c__incl.png" border="0" usemap="#src_2main_8c" alt=""/></div>
 <map name="src_2main_8c" id="src_2main_8c">
-<area shape="rect" title=" " alt="" coords="353,5,442,32"/>
+<area shape="rect" title=" " alt="" coords="385,5,474,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,91,107"/>
-<area shape="rect" title=" " alt="" coords="255,229,366,256"/>
+<area shape="rect" title=" " alt="" coords="299,229,410,256"/>
 <area shape="rect" title=" " alt="" coords="166,80,229,107"/>
-<area shape="rect" title=" " alt="" coords="253,80,323,107"/>
-<area shape="rect" title=" " alt="" coords="348,80,447,107"/>
-<area shape="rect" href="io_8h.html" title=" " alt="" coords="471,80,518,107"/>
-<area shape="rect" href="renderer_8h.html" title=" " alt="" coords="451,155,539,181"/>
-<area shape="rect" title=" " alt="" coords="594,80,649,107"/>
-<area shape="rect" href="shaders_8h.html" title=" " alt="" coords="673,80,759,107"/>
+<area shape="rect" title=" " alt="" coords="253,80,315,107"/>
+<area shape="rect" title=" " alt="" coords="339,80,410,107"/>
+<area shape="rect" title=" " alt="" coords="435,80,533,107"/>
+<area shape="rect" href="io_8h.html" title=" " alt="" coords="558,80,605,107"/>
+<area shape="rect" href="renderer_8h.html" title=" " alt="" coords="568,155,656,181"/>
+<area shape="rect" title=" " alt="" coords="681,80,735,107"/>
+<area shape="rect" href="shaders_8h.html" title=" " alt="" coords="760,80,845,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarguments.html">arguments</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a498d9f026138406895e9a34b504ac6a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a498d9f026138406895e9a34b504ac6a6">WINDOW_WIDTH</a>&#160;&#160;&#160;800</td></tr>
@@ -112,6 +121,13 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a62f73ea01c816f1996aed4c66f57c4fb"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a62f73ea01c816f1996aed4c66f57c4fb">argp_program_version</a> = &quot;0.1&quot;</td></tr>
+<tr class="separator:a62f73ea01c816f1996aed4c66f57c4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa037e59f26a80a8a2e35e6f2364004d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aaa037e59f26a80a8a2e35e6f2364004d">argp_program_bug_address</a></td></tr>
+<tr class="separator:aaa037e59f26a80a8a2e35e6f2364004d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a5473cf64fa979b48335079c99532e243"></a>
@@ -165,6 +181,37 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aaa037e59f26a80a8a2e35e6f2364004d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa037e59f26a80a8a2e35e6f2364004d">&#9670;&nbsp;</a></span>argp_program_bug_address</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* argp_program_bug_address</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    <span class="stringliteral">&quot;https://github.com/dlozeve/ShaderTool/issues&quot;</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a62f73ea01c816f1996aed4c66f57c4fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62f73ea01c816f1996aed4c66f57c4fb">&#9670;&nbsp;</a></span>argp_program_version</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* argp_program_version = &quot;0.1&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
