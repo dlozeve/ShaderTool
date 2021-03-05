@@ -116,8 +116,6 @@ int main(int argc, char *argv[]) {
     state.inotify_fd = -1;
   }
 
-  initialize_shaders(&state, arguments.shader_file, arguments.buffer_file);
-
   state.window = initialize_window(WINDOW_WIDTH, WINDOW_HEIGHT);
   if (state.window == NULL) {
     glfwTerminate();
@@ -126,39 +124,13 @@ int main(int argc, char *argv[]) {
 
   unsigned int VAO = initialize_vertices();
 
-  state.screen_shader.program = glCreateProgram();
-  if (!state.screen_shader.program) {
-    log_error("Could not create screen shader program");
+  int err =
+      initialize_shaders(&state, arguments.shader_file, arguments.buffer_file,
+                         WINDOW_WIDTH, WINDOW_HEIGHT);
+  if (err) {
     glfwDestroyWindow(state.window);
     glfwTerminate();
     return EXIT_FAILURE;
-  }
-  compile_shaders(&state.screen_shader.program, state.screen_shader.filename);
-  glUseProgram(state.screen_shader.program);
-  glUniform1i(glGetUniformLocation(state.screen_shader.program, "u_texture"),
-              0);
-
-  unsigned int framebuffer = 0;
-  unsigned int texture_color_buffer = 0;
-  if (state.buffer_shader.filename) {
-    state.buffer_shader.program = glCreateProgram();
-    if (!state.buffer_shader.program) {
-      log_error("Could not create buffer shader program");
-      glfwDestroyWindow(state.window);
-      glfwTerminate();
-      return EXIT_FAILURE;
-    }
-    compile_shaders(&state.buffer_shader.program, state.buffer_shader.filename);
-    glUseProgram(state.buffer_shader.program);
-    glUniform1i(glGetUniformLocation(state.buffer_shader.program, "u_texture"),
-                0);
-
-    if (initialize_framebuffer(&framebuffer, &texture_color_buffer,
-                               WINDOW_WIDTH, WINDOW_HEIGHT)) {
-      glfwDestroyWindow(state.window);
-      glfwTerminate();
-      return EXIT_FAILURE;
-    }
   }
 
   /* Drawing loop */
@@ -184,7 +156,7 @@ int main(int argc, char *argv[]) {
 
     if (state.buffer_shader.filename) {
       /* bind the framebuffer and draw to it */
-      glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+      glBindFramebuffer(GL_FRAMEBUFFER, state.framebuffer);
 
       /* Background */
       glClearColor(0, 0, 0, 1.0f);
@@ -204,7 +176,7 @@ int main(int argc, char *argv[]) {
 
       /* Draw the vertices */
       glBindVertexArray(VAO);
-      glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
+      glBindTexture(GL_TEXTURE_2D, state.texture_color_buffer);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       glBindVertexArray(0);
     }
@@ -229,7 +201,7 @@ int main(int argc, char *argv[]) {
 
     /* Draw the vertices */
     glBindVertexArray(VAO);
-    glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
+    glBindTexture(GL_TEXTURE_2D, state.texture_color_buffer);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 

@@ -8,16 +8,20 @@
 #include "shaders.h"
 
 /**
- * @brief Initialize shaders and setup inotify if required.
+ * @brief Initialize shaders, compile them, and create the required
+ * texture for the buffer shader.
  *
  * @param state The target renderer state.
  * @param shader_file The file name of the screen shader.
  * @param buffer_file The file name of the buffer shader, or NULL if no buffer
  * shader.
+ * @param texture_width The width of the texture for the buffer shader.
+ * @param texture_height The height of the texture for the buffer shader.
  * @return 0 on success, 1 on error.
  */
 int initialize_shaders(struct renderer_state *state, const char *shader_file,
-                       const char *buffer_file) {
+                       const char *buffer_file, int texture_width,
+                       int texture_height) {
   state->screen_shader.filename = shader_file;
   log_info("Screen shader file: %s", state->screen_shader.filename);
 
@@ -46,6 +50,35 @@ int initialize_shaders(struct renderer_state *state, const char *shader_file,
       } else {
         log_debug("[inotify] Watching file %s", state->buffer_shader.filename);
       }
+    }
+  }
+
+  state->screen_shader.program = glCreateProgram();
+  if (!state->screen_shader.program) {
+    log_error("Could not create screen shader program");
+    return 1;
+  }
+  compile_shaders(&state->screen_shader.program, state->screen_shader.filename);
+  glUseProgram(state->screen_shader.program);
+  glUniform1i(glGetUniformLocation(state->screen_shader.program, "u_texture"),
+              0);
+
+  if (state->buffer_shader.filename) {
+    state->buffer_shader.program = glCreateProgram();
+    if (!state->buffer_shader.program) {
+      log_error("Could not create buffer shader program");
+      return 1;
+    }
+    compile_shaders(&state->buffer_shader.program,
+                    state->buffer_shader.filename);
+    glUseProgram(state->buffer_shader.program);
+    glUniform1i(glGetUniformLocation(state->buffer_shader.program, "u_texture"),
+                0);
+
+    if (initialize_framebuffer(&state->framebuffer,
+                               &state->texture_color_buffer, texture_width,
+                               texture_height)) {
+      return 1;
     }
   }
 
