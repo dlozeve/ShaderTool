@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <argp.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <sys/inotify.h>
@@ -12,13 +13,84 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    log_error("Usage: %s <screen shader> [<buffer shader>]", argv[0]);
-    return EXIT_FAILURE;
-  }
+const char *argp_program_version = "0.1";
+const char *argp_program_bug_address =
+    "https://github.com/dlozeve/ShaderTool/issues";
+static char doc[] =
+    "ShaderTool -- Live tool for developing OpenGL shaders interactively";
+static char args_doc[] = "SHADER\v"
+                         "Compile and render the SHADER.";
 
-  log_set_level(LOG_DEBUG);
+static struct argp_option options[] = {
+    {"verbose", 'v', 0, 0, "Produce verbose output", 0},
+    {"silent", 's', 0, 0, "Don't produce any output", 0},
+    {"quiet", 'q', 0, OPTION_ALIAS, 0, 0},
+    {"buffer", 'b', "FILE", 0, "Source file of the buffer fragment shader", 0},
+    {0},
+};
+
+struct arguments {
+  char *shader_file;
+  int verbose;
+  int silent;
+  char *buffer_file;
+};
+
+static error_t parse_opt(int key, char *arg, struct argp_state *state) {
+  struct arguments *arguments = state->input;
+
+  switch (key) {
+  case 'v':
+    arguments->verbose = true;
+    break;
+  case 's':
+  case 'q':
+    arguments->silent = true;
+    break;
+  case 'b':
+    arguments->buffer_file = arg;
+    break;
+
+  case ARGP_KEY_ARG:
+    if (state->arg_num >= 1) {
+      /* Too many arguments */
+      argp_usage(state);
+    }
+    arguments->shader_file = arg;
+    break;
+
+  case ARGP_KEY_END:
+    if (state->arg_num < 1) {
+      /* Not enough arguments */
+      argp_usage(state);
+    }
+    break;
+
+  default:
+    return ARGP_ERR_UNKNOWN;
+  }
+  return 0;
+}
+
+static struct argp argp_parser = {
+    .options = options, .parser = parse_opt, .args_doc = args_doc, .doc = doc};
+
+int main(int argc, char *argv[]) {
+  struct arguments arguments = {0};
+  /* Default values */
+  arguments.verbose = false;
+  arguments.silent = false;
+  arguments.buffer_file = 0;
+
+  argp_parse(&argp_parser, argc, argv, 0, 0, &arguments);
+
+  if (arguments.silent) {
+    log_set_level(LOG_ERROR);
+  } else if (arguments.verbose) {
+    log_set_level(LOG_DEBUG);
+  } else {
+    log_set_level(LOG_INFO);
+  }
 
   struct renderer_state state = {0};
 
@@ -34,7 +106,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  state.screen_shader.filename = argv[1];
+  state.screen_shader.filename = arguments.shader_file;
   log_info("Screen shader file: %s", state.screen_shader.filename);
 
   if (state.inotify_fd != -1) {
@@ -48,8 +120,8 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  if (argc >= 3) {
-    state.buffer_shader.filename = argv[2];
+  if (arguments.buffer_file) {
+    state.buffer_shader.filename = arguments.buffer_file;
     log_info("Buffer shader file: %s", state.buffer_shader.filename);
 
     if (state.inotify_fd != -1) {
