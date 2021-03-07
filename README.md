@@ -5,6 +5,8 @@
 
 Live tool for developing OpenGL shaders interactively.
 
+![psychedelic bacteria](https://github.com/dlozeve/ShaderTool/blob/master/images/bacteria.png?raw=true) ![julia](https://github.com/dlozeve/ShaderTool/blob/master/images/julia.gif?raw=true)
+
 I developed this small program to experiment with shaders locally, to
 reproduce an experience like [Shadertoy](https://www.shadertoy.com/)
 offline, with the ability to choose my own text editor. It was also a
