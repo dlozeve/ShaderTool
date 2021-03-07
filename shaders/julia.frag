@@ -49,11 +49,11 @@ float pi = 2.0 * asin(1.0);
 
 void main() {
   // Changes with time
-  // float a = 2.0 * pi * (int(u_frame) % 500) / 500.0;
-  // vec2 c = 0.7885 * vec2(cos(a), sin(a));
+  float a = 2.0 * pi * (int(u_frame) % 500) / 500.0;
+  vec2 c = 0.7885 * vec2(cos(a), sin(a));
 
   // Changes with cursor position
-  vec2 c = u_mouse.xy / u_resolution.xy * 2.0 - vec2(1.0, 1.0);
+  // vec2 c = u_mouse.xy / u_resolution.xy * 2.0 - vec2(1.0, 1.0);
 
   vec2 z = gl_FragCoord.xy / u_resolution.xy * 3.0 - vec2(1.5, 1.5);
   int i = 0;

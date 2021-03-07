@@ -84,3 +84,16 @@ in a texture in another framebuffer) does not work properly. I don't
 understand exactly what's broken, but maybe I'll investigate it more
 closely later. If you have any idea about what went wrong, don't
 hesitate to notify me!
+
+## References and other resources
+
+- [LearnOpenGL](https://learnopengl.com/)
+- [open.gl](https://open.gl/)
+- [docs.gl](http://docs.gl/)
+- [The Book of Shaders](https://thebookofshaders.com/)
+- [glslViewer](https://github.com/patriciogonzalezvivo/glslViewer), a
+  much more complete project with similar aims
+- [Shadertoy](https://www.shadertoy.com/)
+- [smoothstep.io](https://smoothstep.io/)
+- [webgl-noise](https://github.com/stegu/webgl-noise/), a collection
+  of reference implementations of noise functions, for use in shaders
