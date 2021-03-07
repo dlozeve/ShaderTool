@@ -68,7 +68,44 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a href="https://github.com/dlozeve/ShaderTool/actions/workflows/build.yml"><object type="image/svg+xml" data="https://github.com/dlozeve/ShaderTool/actions/workflows/build.yml/badge.svg" style="pointer-events: none;">build</object></a> <a href="https://dlozeve.github.io/ShaderTool/"><object type="image/svg+xml" data="https://github.com/dlozeve/ShaderTool/actions/workflows/docs.yml/badge.svg" style="pointer-events: none;">docs</object></a></p>
-<p>Live tool for developing OpenGL shaders interactively. </p>
+<p>Live tool for developing OpenGL shaders interactively.</p>
+<p>I developed this small program to experiment with shaders locally, to reproduce an experience like <a href="https://www.shadertoy.com/">Shadertoy</a> offline, with the ability to choose my own text editor. It was also a good project to learn OpenGL development. For this reason, the code is very minimal and should be fairly readable.</p>
+<p>Additional features:</p>
+<ul>
+<li>Extensive logging (using the nice <a href="https://github.com/rxi/log.c">log.c</a> library)</li>
+<li>FPS tracking</li>
+<li>Reload shaders automatically on save (using <a href="https://man.archlinux.org/man/inotify.7">inotify</a>)</li>
+<li>Save screenshot to a file</li>
+<li>Complete argument parsing with <a href="https://www.gnu.org/software/libc/manual/html_node/Argp.html">Argp</a></li>
+<li>Full documentation with <a href="https://www.doxygen.nl/index.html">Doxygen</a></li>
+</ul>
+<h1>Build</h1>
+<p>This project requires the <a href="https://www.glfw.org/">GLFW</a>, <a href="http://glew.sourceforge.net/">GLEW</a>, and <a href="https://freeimage.sourceforge.io/">FreeImage</a> libraries. On a Debian/Ubuntu system: </p><div class="fragment"><div class="line">sudo apt-get install libglfw3-dev libglew-dev libfreeimage-dev</div>
+</div><!-- fragment --><p>To build (with <a href="https://mesonbuild.com/">Meson</a>): </p><div class="fragment"><div class="line">meson build</div>
+<div class="line">ninja -C build</div>
+</div><!-- fragment --><p>To build the documentation with <a href="https://www.doxygen.nl/index.html">Doxygen</a>: </p><div class="fragment"><div class="line">doxygen Doxyfile</div>
+</div><!-- fragment --><p>The documentation is also available <a href="https://dlozeve.github.io/ShaderTool/">online</a>.</p>
+<h1>Usage</h1>
+<div class="fragment"><div class="line">Usage: shadertool [OPTION...] SHADER</div>
+<div class="line">                                    Compile and render the SHADER.</div>
+<div class="line">ShaderTool -- Live tool for developing OpenGL shaders interactively</div>
+<div class="line"> </div>
+<div class="line">  -b, --buffer=FILE          Source file of the buffer fragment shader</div>
+<div class="line">  -r, --auto-reload          Automatically reload on save</div>
+<div class="line">  -s, -q, --silent, --quiet  Don&#39;t produce any output</div>
+<div class="line">  -v, --verbose              Produce verbose output</div>
+<div class="line">  -?, --help                 Give this help list</div>
+<div class="line">      --usage                Give a short usage message</div>
+<div class="line">  -V, --version              Print program version</div>
+</div><!-- fragment --><p>For instance, to run the <a href="shaders/mandelbrot.frag">mandelbrot</a> shader with live reloading on save: </p><div class="fragment"><div class="line">shadertool -r shaders/mandelbrot.frag</div>
+</div><!-- fragment --><p>Keyboard shortcuts:</p>
+<ul>
+<li><code>Escape</code> to quit</li>
+<li><code>R</code> to reload the shaders</li>
+<li><code>S</code> to save a screenshot to the current directory, in a file <code>shadername_frame_date_time.png</code></li>
+</ul>
+<h1>Limitations</h1>
+<p>For now, the "buffer" shader (i.e. the additional shader that renders in a texture in another framebuffer) does not work properly. I don't understand exactly what's broken, but maybe I'll investigate it more closely later. If you have any idea about what went wrong, don't hesitate to notify me! </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
